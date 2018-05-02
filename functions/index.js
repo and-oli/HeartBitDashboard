@@ -17,7 +17,7 @@ const fireBaseApp = admin.initializeApp({
   databaseURL: 'https://carma-heartbit.firebaseio.com'
 });
 var db = admin.database();
-var ref = db.ref("usersData");
+var ref = db.ref("usersData");//Todos los datos
 
 function getUserData(){
   return ref.once("value").then( (snap) => snap.val());
@@ -30,8 +30,8 @@ function getUserData(){
 // });
 /* GET home page. */
 router.get("/", function(req, res, next) {
-  getUserData().then((data) =>{
-      res.send({success:true,data:data})
+  getUserData().then((snapvalresult) =>{
+      res.send({success:true,data:snapvalresult})
   })
   //res.render("index", { title: "Express" });
 });

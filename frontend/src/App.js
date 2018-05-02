@@ -28,17 +28,19 @@ class App extends Component {
   }
   mostrarHistorial = () =>{
     return Object.keys(this.state.mierda).map((ref, i) =>{
-      let obj = this.state.mierda[ref].records;
+      let obj = (this.state.mierda[ref].records|| {} );
       return (
         <div>
           <div>{ref}</div>
           <div>
-            {Object.keys(obj).map(
-              (record,j)=>{
-                if(j< 10)
-                return (
-                  <div>Record num: {record}</div>
-                )}
+            {
+              Object.keys(obj).map(
+                (record,j)=>{
+                  if(j< 10)
+                  return (
+                    <div>Record num: {record}</div>
+                  )
+                }
               )
             }
           </div>
