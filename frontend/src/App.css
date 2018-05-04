@@ -26,3 +26,8 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+div.tooltip{
+  position: absolute;
+  padding: 0 10px;
+  background-color: white;
+}
