@@ -5,15 +5,11 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      mierda:[]
+      mierda:{}
     };
   }
   componentDidMount ()
   {
-
-
-
-
     fetch('/api/')
     .then((response) => response.json())
     .then((responseJson) => {
@@ -72,26 +68,34 @@ class App extends Component {
     });
   }
   mostrarHistorial = () =>{
-    return Object.keys(this.state.mierda).map((ref, i) =>{
-      let obj = (this.state.mierda[ref].records|| {} );
-      return (
-        <div>
-          <div>{ref}</div>
+    if(this.state.mierda["3iolqhPzn2aDtzxtZ7hLo2KeIIw2"]){
+      return Object.keys(this.state.mierda).map((ref, i) =>{
+        let obj = (this.state.mierda[ref].records|| {} );
+        return (
           <div>
-            {
-              Object.keys(obj).map(
-                (record,j)=>{
-                  if(j< 10)
-                  return (
-                    <div>Record num: {record}</div>
-                  )
-                }
-              )
-            }
+            <div>{ref}</div>
+            <div>
+              {
+                Object.keys(obj).map(
+                  (record,j)=>{
+                    if(j< 10)
+                    return (
+                      <div>Record num: {record}</div>
+                    )
+                  }
+                )
+              }
+            </div>
           </div>
-        </div>
-      )
-    });
+        )
+      });
+    }
+    else return(
+      <div class="spinner">
+        <div class="double-bounce1"></div>
+        <div class="double-bounce2"></div>
+      </div>
+    )
   }
 
   render() {
