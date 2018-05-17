@@ -1,49 +1,110 @@
-.App {
-  text-align: center;
+
+html {
+  font-size: 100%;
+  line-height: 1.5;
+  height: 100%;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+body {
+  position: relative;
+  margin: 0;
+  font-family: 'Work Sans', Arial, Helvetica, sans-serif;
+  min-height: 100%;
+  height: 100%;
+}
+/*---------------------------------------------------------------NavBar---------------------------------------------------------------*/
+
+ul.ant-menu.ant-menu-dark.ant-menu-root.ant-menu-horizontal {
+  background: #4995eb;
+}
+.ant-menu.ant-menu-dark .ant-menu-item-selected, .ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected {
+  background-color: #88cbd1 !important;
+}
+.header.ant-layout-header {
+  background: #4995eb;
+}
+.ant-menu-dark.ant-menu-horizontal {
+  border-bottom-color: #4995eb!important;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.navbar-right{
+  float:right !important;
+}
+#root > div > div.header.ant-layout-header > ul > li.ant-menu-item.navbar-right.ant-menu-item-selected{
+  background-color: #4995eb!important;
+}
+#hi.ant-menu-item{
+  cursor:context-menu;
+}
+/*---------------------------------------------------------------Colombia's map---------------------------------------------------------------*/
+div.tooltip{
+  position: absolute;
+  padding: 0 10px;
+  background-color: white;
+}
+#root{
+  height: 100%;
+  background-color: #f0f2f5;
 }
 
-.App-title {
-  font-size: 1.5em;
+.map {
+  margin: 0 auto;
+  display: block;
 }
-
-.App-intro {
-  font-size: large;
+#mapa{
+  border-right: 1px solid #d6d6d6;
 }
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.map-vis{
+  float:left;
+  width: 50%;
+}
+#map-info {
+  margin-left: 30px;
+}
+.state-borders {
+  stroke: #aaa;
+  stroke-width: 0.7px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+.scaleBar{
+  width: 60%;
+  margin: 0 auto;
+  display: block;
+}
+h2{
+  color:#919191 !important;
 }
 div.tooltip{
   position: absolute;
   padding: 0 10px;
   background-color: white;
 }
+/*---------------------------------------------------------------Other---------------------------------------------------------------*/
 .spinner {
-  width: 40px;
-  height: 40px;
-
+  width: 15px;
+  height: 15px;
   position: relative;
-  margin: 100px auto;
+  margin: 10px 0em;
 }
-
+.spinner-big {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+.spinner-big-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
 .double-bounce1, .double-bounce2 {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background-color: #333;
+  background-color: #88cbd1;
   opacity: 0.6;
   position: absolute;
   top: 0;
@@ -57,7 +118,13 @@ div.tooltip{
   -webkit-animation-delay: -1.0s;
   animation-delay: -1.0s;
 }
-
+#components-layout-demo-top-side-2 .logo {
+  width: 120px;
+  height: 31px;
+  background: rgba(255,255,255,.2);
+  margin: 16px 28px 16px 0;
+  float: left;
+}
 @-webkit-keyframes sk-bounce {
   0%, 100% { -webkit-transform: scale(0.0) }
   50% { -webkit-transform: scale(1.0) }
@@ -67,8 +134,8 @@ div.tooltip{
   0%, 100% {
     transform: scale(0.0);
     -webkit-transform: scale(0.0);
-  } 50% {
-    transform: scale(1.0);
-    -webkit-transform: scale(1.0);
+    } 50% {
+      transform: scale(1.0);
+      -webkit-transform: scale(1.0);
+    }
   }
-}

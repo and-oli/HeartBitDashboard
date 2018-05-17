@@ -9,9 +9,12 @@
     "logs": "firebase functions:log"
   },
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "express": "^4.16.3",
     "firebase-admin": "~5.12.0",
-    "firebase-functions": "^1.0.1"
+    "firebase-functions": "^1.0.1",
+    "jsonwebtoken": "^8.2.1",
+    "mongodb": "^3.1.0-beta4"
   },
   "private": true
 }
