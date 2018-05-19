@@ -37,8 +37,8 @@ class MapInfo  extends Component {
 
       // add the SVG element
       var svg = d3.select("#svg2")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom +100)
+      .attr("width", "90%")
+      .attr("height", height + margin.top + margin.bottom+75 )
       .append("g")
       .attr("transform",
       "translate(" + margin.left + "," + margin.top + ")");
@@ -80,16 +80,29 @@ class MapInfo  extends Component {
       svg.selectAll("bar")
       .data(data)
       .enter().append("rect")
-      .style("fill","#88cbd1")
-      .attr("x", function(d, i) { return x(d.name) +5 ;  })
+      .style("fill","#ff8403")
+      .attr("x", function(d, i) { return x(d.name) +5 -width/data.length;  })
       .attr("width", x.bandwidth() -9)
-      .attr("y", function(d) { return y(d.count); })
-      .attr("height", function(d) { return height - y(d.count); });
+      .attr("transform",function(d, i){ return "rotate(180 "+" "+((i)*width/data.length)+" "+height+" )"; })
+
+      .attr("y", function(d) { return height; })
+      .attr("height", 0)
+      .transition()
+      .duration(200)
+      .delay(function (d, i) {
+        return i * 50;
+      })
+      .attr("height", function(d) { return height - y(d.count); })
+      .transition()
+      .duration(200)
+      .delay(function (d, i) {
+        return i * 50;
+      });
       //Labels
       svg.append("text")
       .attr("transform",
       "translate(" + (width/2) + " ," +
-      (height + margin.top + 80) + ")")
+      (height + margin.top + 70) + ")")
       .style("text-anchor", "middle")
       .text("Medicine");
 
@@ -115,8 +128,11 @@ class MapInfo  extends Component {
   render() {
     return (
       <div className="map-vis">
-        <h2 id="map-info">Medicine intake frequency in {this.props.currentDepartment.name}</h2>
-        <svg id = "svg2" style ={{marginLeft:"30px"}}></svg>
+        <h2 id="map-info">{(this.props.currentDepartment.name!=="Click on a department"? "Medicine intake frequency in " :"") +this.props.currentDepartment.name }</h2>
+        <div className ="innerbox2" style ={{minHeight:"575px"}}>
+
+          <svg id = "svg2" style ={{margin:"0 auto",display:"block", paddingTop:"20px"}}></svg>
+        </div>
       </div>
     );
   }

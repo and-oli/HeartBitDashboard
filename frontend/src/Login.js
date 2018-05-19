@@ -16,6 +16,8 @@ class Login extends Component {
     e.preventDefault();
     let data = {username:this.refs.username.value, password:this.refs.password.value};
     fetch('/api/authenticate', {
+    //fetch('http://localhost:5000/api/authenticate', {
+
       method: 'POST',
       headers: {
         'Accept': 'application/json',

@@ -1,17 +1,9 @@
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
 const fs = require('fs');
 const dpts = JSON.parse(fs.readFileSync(__dirname+'/MockData/dptsNames.json', 'utf8'));
 const medsNames = JSON.parse(fs.readFileSync(__dirname+'/MockData/medsNames.json', 'utf8'));
 //const usersData = JSON.parse(fs.readFileSync(__dirname+'/MockData/usersData.json', 'utf8'))["usersData"];
 //const medsData = JSON.parse(fs.readFileSync(__dirname+'/MockData/medsData.json', 'utf8'))["medsData"];
-
-
 const functions = require('firebase-functions');
 const express = require("express");
 const router = express();
@@ -21,9 +13,12 @@ const serviceAccount = require('./secret/secretkey.json');
 const config 	   = require('./secret/config');
 const bcrypt = require('bcrypt-nodejs');
 const jwt        = require("jsonwebtoken");
+const storage = require('@google-cloud/storage');
 const superSecret = config.secret;
-
-const fireBaseApp = admin.initializeApp({
+const Multer = require('multer');
+const imgUpload = require('./UploadImage');
+const Busboy = require("busboy")
+const fireBaseApp = admin.initializeApp({ //No lo mueva puto
   credential: admin.credential.cert(serviceAccount),
   databaseURL: 'https://carma-heartbit.firebaseio.com'
 });
@@ -33,16 +28,21 @@ const rootRef = db.ref();
 const headUserRef = db.ref("HeadUsers");
 const medsDataRef = db.ref("medsData");
 
+const multer = Multer({
+  storage: Multer.MemoryStorage,
+  fileSize: 5 * 1024 * 1024
+});
 
-function getUserData(){
-  return userDataRef.once("value").then( (snap) => snap.val());
-}
+
+
 app.use(function(req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
-  res.setHeader('Access-Control-Allow-Headers', 'Origin,X-Requested-With,content-type, Authorization,Accept');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin,X-Requested-With,Content-Type, Authorization,Accept');
   next();
 });
+
+
 
 router.post("/authenticate",function(req,res){
   headUserRef.once("value").then((snap)=>snap.val()).then((json)=>{
@@ -134,10 +134,37 @@ router.get("/mapInfo", function(req, res, next) {
   }).catch((err)=>{
     console.error(err);
   });
+});
+multipartToJson = (req, res) => {
+    if (req.method === 'POST') {
+        const busboy = new Busboy({ headers: req.headers });
+        let formData = {};
 
+        busboy.on('field', (fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) => {
+            // We're just going to capture the form data in a JSON document.
+            formData[fieldname] = val;
+        });
 
+        busboy.on('finish', () => {
+          res.send(formData);
+        });
+        // The raw bytes of the upload will be in req.rawBody.
+        busboy.end(req.rawBody);
+    } else {
+        // Only support POST.
+        res.status(405).end();
+    }
+}
+router.post('/uploadPicture', multer.single("image"), imgUpload.uploadToGcs, function(request, response, next) {
+  const data = request.body;
+  if (request.file && request.file.cloudStoragePublicUrl) {
+    data.imageUrl = request.file.cloudStoragePublicUrl;
+  }
+  response.send(data);
 
 });
 app.use('/api', router);
+
+
 
 exports.app = functions.https.onRequest(app);

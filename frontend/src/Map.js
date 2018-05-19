@@ -19,6 +19,7 @@ class Map extends Component {
     if(!this.props.mapData){
       this.setState({loading:true});
       fetch('/api/mapInfo')
+      //fetch('http://localhost:5000/api/mapInfo')
       .then((response) => response.json())
       .then((responseJson) => {
         if(responseJson.success){
@@ -52,13 +53,8 @@ class Map extends Component {
     .attr("height", height)
     .append("g");
 
-    let div = d3.select("body")
-    .append("div")
-    .attr("class", "tooltip")
-    .style("opacity", 0);
 
-    d3.select("div.tooltip")
-    .append("h3");
+
 
     d3.json("./dptos.json").then( function(json){
       mapa.selectAll("path")
@@ -68,21 +64,19 @@ class Map extends Component {
       .attr("d", path)
       .attr("class", "state-borders")
       .style("fill", function(d){
-        let col = 255 - this.props.mapData[d.properties["NOMBRE_DPT"]].pressure.color;
-        return "rgb(255,"+col+","+col+")";
+        return d3.interpolateBlues(this.props.mapData[d.properties["NOMBRE_DPT"]].pressure.color/255)
+        // let col = 255 - this.props.mapData[d.properties["NOMBRE_DPT"]].pressure.color;
+        // return "rgb(255,"+col+","+col+")";
       }.bind(this)
     )
+    .style("cursor","pointer")
     .on("click", function(d){
       this.selectDepartment(d.properties["NOMBRE_DPT"]);
+      //d3.select(this).attr("r", 10).style("fill", "red");
     }.bind(this))
     .on("mouseover", function(d){
-      div.transition()
-      .duration(200)
-      .style("opacity", 0.9);
-      div.select("h3")
+      d3.select("#tooltipyT")
       .text(d.properties["NOMBRE_DPT"]+": "+Math.floor(this.props.mapData[d.properties["NOMBRE_DPT"]].pressure.avgSysto));
-      div.style("left", (d3.event.pageX+4) + "px")
-      .style("top", (d3.event.pageY - 40) + "px");
     }.bind(this))
   }.bind(this));
 
@@ -90,14 +84,16 @@ class Map extends Component {
 render() {
   if(!this.state.loading){//!this.state.loading
     return (
-      <div>
+      <div style = {{height:"100%"}}>
         <div className= "map-vis">
-          <h2 >Systolic pressure average by department</h2>
-          <div id="mapa"></div>
-          <img className ="scaleBar" src="./scalebar.png" alt="Scale bar" />
-
+          <h2 className= "map-title">Systolic pressure (in mmHg) average by department</h2>
+          <div className ="innerbox" style ={{minHeight:"575px"}}>
+            <div  className="tooltipy"><h3 id="tooltipyT">Hover over a department</h3></div>
+            <div id="mapa"></div>
+            <img className ="scaleBar" src="./scalebar.png" alt="Scale bar" />
+          </div>
         </div>
-        <MapInfo currentDepartment={this.state.currentDepartment}/>
+          <MapInfo currentDepartment={this.state.currentDepartment}/>
       </div>)
     }
     else return(

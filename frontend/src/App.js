@@ -8,10 +8,26 @@ class App extends Component {
     super(props);
     this.state = {
       data: null,
-      mapData:null
+      mapData:null,
+      instagramEdges:[],
+      twitterUses : []
     }
   }
   componentDidMount(){
+    fetch("https://www.instagram.com/explore/tags/hypertension/?__a=1").then((response) => response.json())
+    .then((responseJson) => {
+      this.setState({instagramEdges:responseJson.graphql.hashtag.edge_hashtag_to_top_posts.edges});
+    }).catch( err => console.error(err));
+    fetch("https://banqtweet.herokuapp.com/api/tweets/").then((response) => response.json())
+    .then((responseJson) => {
+       this.setState({twitterUses:responseJson.statuses});
+    }).catch( err => console.error(err));
+
+
+    //let params = {screen_name: 'nodejs'};
+
+
+
     //BORRAR!
     //  localStorage.setItem("HBInfo",JSON.stringify({token:1,user:{username:"mierdo",name:"mierdolo"}}));
     //BORRAR!
@@ -42,7 +58,7 @@ class App extends Component {
         <Login setUser = {this.setUser}></Login>
       );
     }
-    else return <Home name ={this.state.data.user.name} logout = {this.logout} mapData = {this.state.mapData} setMapData = {this.setMapData}/>
+    else return <Home user = {this.state.data.user} name ={this.state.data.user.name} logout = {this.logout} mapData = {this.state.mapData} setMapData = {this.setMapData} instagramEdges = {this.state.instagramEdges} twitterUses ={this.state.twitterUses}/>
   }
 }
 
