@@ -3,6 +3,8 @@ import './App.css';
 import Login from './Login';
 import Home from "./Home"
 
+
+/*Tienen problemas de accesibilidad con los colores y por no usar landmarks, podrian considerar corregirlo usando tags como <main>*/
 class App extends Component {
   constructor(props){
     super(props);
