@@ -3,6 +3,7 @@ import './App.css';
 import * as d3 from "d3";
 import MapInfo from "./MapInfo"
 
+/*En general me parece que las visualizaciones son muy cheveres y utiles*/
 class Map extends Component {
   constructor(props) {
     super(props);
