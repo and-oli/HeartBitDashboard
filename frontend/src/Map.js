@@ -38,6 +38,7 @@ class Map extends Component {
       this.paintMap();
     }
   }
+	// Seria bueno utilizar patron de reusabilidad de graficas
   paintMap = ()=>{
     var width = 400;
     var height = 500;

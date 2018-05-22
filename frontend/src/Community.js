@@ -15,6 +15,7 @@ class Community  extends Component {
   }
   componentDidMount(){
   }
+	// Seria bueno utilizar una misma convencion para las funciones unas tienen son arrow functions otras no
   showInputCard=()=>{
     return(
       <div className = "col-sm-12 " >

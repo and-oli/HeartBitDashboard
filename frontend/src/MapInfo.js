@@ -7,6 +7,7 @@ class MapInfo  extends Component {
     this.state = {
     };
   }
+	// Seria bueno reutilizar patron reusabilidad de graficas.
   paintGraph = ()=>{
 
     if(this.props.currentDepartment.name !== "Click on a department"){
