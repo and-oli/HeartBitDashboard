@@ -43,7 +43,7 @@ app.use(function(req, res, next) {
 });
 
 
-
+// Seria bueno separar las rutas en otro archivo
 router.post("/authenticate",function(req,res){
   headUserRef.once("value").then((snap)=>snap.val()).then((json)=>{
     let user = req.body;
@@ -135,6 +135,8 @@ router.get("/mapInfo", function(req, res, next) {
     console.error(err);
   });
 });
+
+// Seria bueno separar los helpers de los routes o por lo menos ponerlo despues.
 multipartToJson = (req, res) => {
     if (req.method === 'POST') {
         const busboy = new Busboy({ headers: req.headers });

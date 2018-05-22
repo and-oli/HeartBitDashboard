@@ -13,6 +13,8 @@ class App extends Component {
       twitterUses : []
     }
   }
+
+	// Seria bueno desacoplar las responsabilidades de esta funcion
   componentDidMount(){
     fetch("https://www.instagram.com/explore/tags/hypertension/?__a=1").then((response) => response.json())
     .then((responseJson) => {
