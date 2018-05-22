@@ -3,6 +3,11 @@ import './App.css';
 import Login from './Login';
 import Home from "./Home"
 
+
+/* Podrian poner instrucciones de como correr el App en el README
+   En la version desplegada no se puede crear un usuario nuevo. Si uno no tiene cuenta no hay modo de que pueda crearla y
+   utilizar el app*/
+
 class App extends Component {
   constructor(props){
     super(props);
