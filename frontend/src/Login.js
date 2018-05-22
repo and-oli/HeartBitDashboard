@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import './Login.css';
 
+/*Podrian agregar funcionalidad de crear usuarios*/
 class Login extends Component {
   constructor(props){
     super(props);
